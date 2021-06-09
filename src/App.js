@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Container } from "react-bootstrap";
+import { Switch } from "react-router-dom";
+import routes from "./routes/index";
+import PublicRoute from "./RouteManagement/PublicRoute";
+import PrivateRoute from "./RouteManagement/PrivateRoute";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Switch>
+        {routes.map((route, idx) =>
+          route.isProtected ? (
+            <PrivateRoute key={idx} {...route} />
+          ) : (
+            <PublicRoute key={idx} {...route} />
+          )
+        )}
+      </Switch>
+    </Container>
   );
 }
 
